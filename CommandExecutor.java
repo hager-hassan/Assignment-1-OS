@@ -7,6 +7,8 @@ public class CommandExecutor {
     static {
         commands.put("pwd" , new PwdCommand());
         commands.put("help" , new HelpCommand());
+        commands.put("exit" , new ExitCommand());
+        commands.put("touch" , new TouchCommand());
     }
 
     public static void executeCommand(String command){

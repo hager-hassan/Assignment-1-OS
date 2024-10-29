@@ -9,19 +9,11 @@ public class CLI {
 
         while(true)
         {
-            System.out.print("> ");
-            command = input.nextLine(); // to receive the command from the user
-
-            if(command.equals("exit")) // to end program
-            {
-                System.out.println("\u001B[33mExiting CLI...\u001B[0m");
-                break;
-            }
+            System.out.print(System.getProperty("user.dir")+" > ");
+            command = input.nextLine().trim(); // to receive the command from the user and delete white spaces from two ends
 
             CommandExecutor.executeCommand(command);
-
         }
-        input.close(); // make resources free
     }
 }
 

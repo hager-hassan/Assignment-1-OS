@@ -13,6 +13,7 @@ public class HelpCommand implements Command {
             System.out.println("mv    - Moves or renames files or directories.");
             System.out.println("rm    - Deletes the specified file.");
             System.out.println("cat   - Displays the contents of the specified file.");
+            System.out.println("exit  - Close the terminal window.");
             System.out.println(">     - Redirects output to a file (overwrites).");
             System.out.println(">>    - Redirects output to a file (appends).");
             System.out.println("|     - Pipes the output of one command to another command.");
