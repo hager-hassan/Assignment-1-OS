@@ -1,14 +1,15 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TouchCommand implements Command {
+public class TouchCommand implements ICommand {
     @Override
-public String execute(String[] args)
+public String[] execute(String[] args)
     {
-        StringBuilder result = new StringBuilder();
+        List<String> result = new ArrayList<>();
 
         if(args.length == 0){
-            System.out.println("\u001B[31mThis command is not supported.\u001B[0m");
-            return null;
+            result.add("\u001B[31mThis command is not supported.\u001B[0m");
         }
 
         for(String fileName : args){
@@ -16,20 +17,20 @@ public String execute(String[] args)
 
             try {
                 if(myFile.createNewFile()){
-                    result.append(fileName).append(" is created.\n");
+                    result.add(fileName + " is created.");
                 }
                 else{
-                    result.append("File already exists. Updated timestamp for ").append(myFile.getName()).append("\n");
+                    result.add("File already exists. Updated timestamp for " + myFile.getName());
                     boolean success = myFile.setLastModified(System.currentTimeMillis());
                     if(!success){
-                        result.append("\u001B[31mFailed to update the timestamp for \u001B[0m").append(myFile.getName()).append(".\n");
+                        result.add("\u001B[31mFailed to update the timestamp for \u001B[0m" + myFile.getName() + ".");
                     }
                 }
             }
             catch (Exception ex) {
-                result.append("\u001B[31mAn error occurred with ").append(fileName).append(".\u001B[0m\n");
+                result.add("\u001B[31mAn error occurred with " + fileName + ".\u001B[0m");
             }
         }
-        return (result.toString());
+        return (result.toArray(new String[0]));
     }
 }

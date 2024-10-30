@@ -1,16 +1,20 @@
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PwdCommand implements Command {
+public class PwdCommand implements ICommand {
     @Override
-    public String execute(String[] args) {
+    public String[] execute(String[] args) {
+
+        List<String> result = new ArrayList<>();
 
         if (args.length == 0) {
             String userDir = System.getProperty("user.dir");
-            return (userDir + '\n');
+            result.add(userDir);
         }
         else{
-            System.out.println("\u001B[31mThis command is not supported. Use 'pwd' to get the current working directory.\u001B[0m");
+            result.add("\u001B[31mThis command is not supported. Use 'pwd' to get the current working directory.\u001B[0m");
         }
-        return null;
+        return (result.toArray(new String[0]));
     }
 }

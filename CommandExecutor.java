@@ -1,8 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class CommandExecutor {
-    private static Map<String, Command> commands = new HashMap<>();
+    private static Map<String, ICommand> commands = new HashMap<>();
 
     static {
         commands.put("pwd" , new PwdCommand());
@@ -26,10 +27,13 @@ public class CommandExecutor {
             System.arraycopy(parts, 1, args, 0, parts.length - 1);
         }
 
-        Command cmd = commands.get(commandName); // take command name and return object
+        ICommand cmd = commands.get(commandName); // take command name and return object
 
         if (cmd != null) {
-            System.out.print(cmd.execute(args)); // the function we override in every class implement the interface
+            String[] result = cmd.execute(args);
+            for (String line : result){ // to return the output from the function we override in lines
+                System.out.println(line);
+            }
         }
         else {
             System.out.println("\u001B[31m'" + commandName + "' is not recognized as an internal or external command.\u001B[0m");
