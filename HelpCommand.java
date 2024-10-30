@@ -1,8 +1,8 @@
 public class HelpCommand implements Command {
     @Override
-    public void execute(String[] args) {
+    public String execute(String[] args) {
         if (args.length == 0) {
-            System.out.println("pwd   - Prints the current working directory.");
+            System.out.println("\u001B[35mpwd   - Prints the current working directory.");
             System.out.println("cd    - Changes the current directory to the specified directory.");
             System.out.println("ls    - Lists the files in the current directory.");
             System.out.println("ls -a - Lists all files, including hidden files.");
@@ -16,10 +16,11 @@ public class HelpCommand implements Command {
             System.out.println("exit  - Close the terminal window.");
             System.out.println(">     - Redirects output to a file (overwrites).");
             System.out.println(">>    - Redirects output to a file (appends).");
-            System.out.println("|     - Pipes the output of one command to another command.");
+            System.out.println("|     - Pipes the output of one command to another command.\u001B[0m");
         }
         else {
             System.out.println("\u001B[31mThis command is not supported. Use 'help' for a list of commands.\u001B[0m");
         }
+        return null;
     }
 }

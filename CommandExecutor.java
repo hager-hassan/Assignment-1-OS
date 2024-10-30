@@ -29,7 +29,7 @@ public class CommandExecutor {
         Command cmd = commands.get(commandName); // take command name and return object
 
         if (cmd != null) {
-            cmd.execute(args); // the function we override in every class implement the interface
+            System.out.print(cmd.execute(args)); // the function we override in every class implement the interface
         }
         else {
             System.out.println("\u001B[31m'" + commandName + "' is not recognized as an internal or external command.\u001B[0m");
