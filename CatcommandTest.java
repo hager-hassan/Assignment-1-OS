@@ -72,6 +72,26 @@ class CatcommandTest {
         assertTrue(content.contains("Hello from file 1."), "Output file should contain content from file 1.");
         assertTrue(content.contains("Hello from file 2."), "Output file should contain content from file 2.");
     }
+    @Test
+    public void testExecuteWithRedirect() throws IOException {
+        // Prepare arguments for redirecting
+        String[] args = {testFile1.getPath(), ">", outputFile.getPath()};
+
+        // Execute the cat command with redirect
+        String[] result = catCommand.execute(args);
+
+        // Check that the output file contains the content of file1
+        String content = new String(Files.readAllBytes(outputFile.toPath()));
+        assertFalse(content.contains("Hello from file 2."), "Output file should not contain content from file 2.");
+
+        // Now redirect file2's content to the same output file (this should overwrite)
+        args = new String[]{testFile2.getPath(), ">", outputFile.getPath()};
+        catCommand.execute(args);
+
+        // Verify that the output file now contains only the content of file2
+        content = new String(Files.readAllBytes(outputFile.toPath()));
+        assertFalse(content.contains("Hello from file 1."), "Output file should not contain content from file 1.");
+    }
 
     @AfterEach
     public void tearDown() {
