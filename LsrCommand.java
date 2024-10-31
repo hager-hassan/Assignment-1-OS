@@ -18,10 +18,10 @@ public class LsrCommand implements Command {
             return result.toArray(new String[0]);
         }
 
-        // Filter out hidden files
+        // Filter out hidden files and sort by file name in reverse order
         Arrays.stream(files)
                 .filter(file -> !file.isHidden()) // Only include visible files
-                .sorted(Comparator.reverseOrder()) // Sort files in reverse order
+                .sorted(Comparator.comparing(File::getName).reversed()) // Sort files by name in reverse order
                 .forEach(file -> result.add(file.getName())); // Collecting all file names
 
         return result.toArray(new String[0]); // Returning the collected output
