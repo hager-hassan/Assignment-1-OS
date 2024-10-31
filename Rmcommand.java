@@ -1,13 +1,19 @@
 package org.os;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Rmcommand {
-    public static void main(String[] args) {
+    public String[] excute(String[] args) {
+        List<String> result = new ArrayList<>();
+
         if (args.length < 1) {
-            System.out.println("Usage: java rmcommand <file_or_directory>");
-            System.out.println("Options:");
-            System.out.println("  -r    Recursively remove directories and their contents");
-            System.out.println("  -d    Remove empty directory");
+            result.add("Usage: java rmcommand <file_or_directory>");
+            result.add("Options:");
+            result.add("  -r    Recursively remove directories and their contents");
+            result.add("  -d    Remove empty directory");
             System.exit(1);
         }
 
@@ -18,7 +24,7 @@ public class Rmcommand {
         File file = new File(path);
 
         if (!file.exists()) {
-            System.out.println("Error: File or directory '" + path + "' does not exist.");
+            result.add("Error: File or directory '" + path + "' does not exist.");
             System.exit(1);
         }
 
@@ -28,43 +34,61 @@ public class Rmcommand {
             } else if (deleteEmptyDir) {
                 if (file.list().length == 0) {  // Checks if directory is empty
                     deleteFile(file);
+                    result.add("success");
                 } else {
-                    System.out.println("Error: Directory '" + path + "' is not empty. Use -r to delete non-empty directories.");
+                    result.add("Error: Directory '" + path + "' is not empty. Use -r to delete non-empty directories.");
                 }// delete the empty directory
             } else {
-                System.out.println("Error: '" + path + "' is a directory. Use -d to delete an empty directory or -r to delete a directory and its contents.");
+                result.add("Error: '" + path + "' is a directory. Use -d to delete an empty directory or -r to delete a directory and its contents.");
                 System.exit(1);
             }
         } else {
-            deleteFile(file); // if it’s a file, delete it directly
+            deleteFile(file);
+            result.add("success");
+// if it’s a file, delete it directly
         }
+        return (result.toArray(new String[0]));
+
     }
 
 
 
-    private static void deleteFile(File file) {
+    private String[] deleteFile(File file) {
+        List<String> result = new ArrayList<>();
+
         if (file.delete()) {
-            System.out.println("File deleted: " + file.getAbsolutePath());
+            result.add("File deleted: " + file.getAbsolutePath());
         } else {
-            System.out.println("Error: Unable to delete file.");
+            result.add("Error: Unable to delete file.");
         }
+        return (result.toArray(new String[0]));
+
     }
 
-    private static void deleteDirectory(File dir) {
+    private String[] deleteDirectory(File dir) {
+        List<String> result = new ArrayList<>();
+
         File[] contents = dir.listFiles();
         if (contents != null) {
             for (File file : contents) {
                 if (file.isDirectory()) {
                     deleteDirectory(file);
+                    result.add("success");
+
                 } else {
                     deleteFile(file);
+                    result.add("success");
+
                 }
             }
         }
         if (dir.delete()) {
-            System.out.println("Directory deleted: " + dir.getAbsolutePath());
+            result.add("Directory deleted: " + dir.getAbsolutePath());
         } else {
-            System.out.println("Error: Unable to delete directory.");
+            result.add("Error: Unable to delete directory.");
         }
+        return (result.toArray(new String[0]));
+
     }
+
 }

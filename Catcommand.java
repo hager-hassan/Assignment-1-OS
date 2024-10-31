@@ -1,12 +1,18 @@
 package org.os;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Catcommand {
-    public static void main(String[] args){
+    @Override
+    public String[] excute(String[] args){
+        List<String> result = new ArrayList<>();
         String inputFile = args[0]; // The input file from arguments
         String outputFile = args[args.length-1];
         if (args.length < 1 ) {
-            System.out.println("Usage: java cat * || cat filename.txt || cat file(s)name.txt >>/> outputfile.txt ");
+            result.add("Usage: java cat * || cat filename.txt || cat file(s)name.txt >>/> outputfile.txt ");
         }else if ("*".equals(args[0])) {
             String projectDirectory = ".";
             printAllTxtFilesAndContents(new File(projectDirectory));
@@ -17,14 +23,17 @@ public class Catcommand {
         } else if (args.length > 2 && ">>".equals(args[1])) {
             // Default output file
             outputFile = args[2];
-            Twogreaterthan.main(new String[]{inputFile, ">>", outputFile}); // hanadi el function bt3t >>
+           Twogreaterthan.main(new String[]{inputFile, ">>", outputFile}); // hanadi el function bt3t >>
 
         }else {
             concatFiles(args);
         }
+        return (result.toArray(new String[0]));
     }
-    private static void printAllTxtFilesAndContents(File directory) {
+    private  String[] printAllTxtFilesAndContents(File directory) {
+        List<String> result = new ArrayList<>();
         File[] files = directory.listFiles();
+
 
         if (files != null && files.length > 0) {
             for (File file : files) {
@@ -36,38 +45,46 @@ public class Catcommand {
                 }
             }
         } else {
-            System.out.println("The directory is empty or an I/O error occurred.");
+            result.add("The directory is empty or an I/O error occurred.");
         }
+        return (result.toArray(new String[0]));
     }
 
-    private static void printFileContent(File file) {
+
+    private String[] printFileContent(File file) {
+        List<String> result = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                result.add(line);
             }
-            System.out.println(); // Add an empty line after each file's content
+
         } catch (IOException e) {
-            System.out.println("Error reading file '" + file.getName() + "': " + e.getMessage());
+            result.add("Error reading file '" + file.getName() + "': " + e.getMessage());
         }
+        return (result.toArray(new String[0]));
     }
 
-    private static void concatFiles(String[] args) {
+    private String[] concatFiles(String[] args) {
+        List<String> result = new ArrayList<>();
+
         for (String inputFile : args) {
             File file = new File(inputFile);
             if (file.exists()) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     String line;
                     while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
+                        result.add(line);
                     }
                 } catch (IOException e) {
-                    System.out.println("Error reading file '" + inputFile + "': " + e.getMessage());
+                  result.add("Error reading file '" + inputFile + "': " + e.getMessage());
                 }
             } else {
-                System.out.println("File '" + inputFile + "' does not exist.");
+                result.add("File '" + inputFile + "' does not exist.");
             }
         }
+        return (result.toArray(new String[0]));
     }
 
 }
