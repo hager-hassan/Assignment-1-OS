@@ -18,11 +18,12 @@ public class LsrCommand implements Command {
             return result.toArray(new String[0]);
         }
 
+        // Filter out hidden files
         Arrays.stream(files)
+                .filter(file -> !file.isHidden()) // Only include visible files
                 .sorted(Comparator.reverseOrder()) // Sort files in reverse order
                 .forEach(file -> result.add(file.getName())); // Collecting all file names
 
         return result.toArray(new String[0]); // Returning the collected output
     }
 }
-
