@@ -1,51 +1,57 @@
-package org.os;
+package org.example;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
-public class Catcommand {
+public class Catcommand implements ICommand {
     @Override
-    public String[] excute(String[] args){
+    public String[] execute(String[] args){
         List<String> result = new ArrayList<>();
         String inputFile = args[0]; // The input file from arguments
         String outputFile = args[args.length-1];
-        if (args.length < 1 ) {
-            result.add("Usage: java cat * || cat filename.txt || cat file(s)name.txt >>/> outputfile.txt ");
-        }else if ("*".equals(args[0])) {
-            String projectDirectory = ".";
-            printAllTxtFilesAndContents(new File(projectDirectory));
-        }else if (args.length > 2 && ">".equals(args[1])) {
-            outputFile = args[2];
-            Onegreaterthan.main(new String[]{inputFile, ">", outputFile});// hanadi el function bt3t >
+       if ("*".equals(args[0])) {
+            String[] allTxtFilesResult =printAllTxtFilesAndContents(new File("."));
+            Collections.addAll(result, allTxtFilesResult);
 
-        } else if (args.length > 2 && ">>".equals(args[1])) {
-            // Default output file
+        }else if ( ">".equals(args[1])) {
             outputFile = args[2];
-           Twogreaterthan.main(new String[]{inputFile, ">>", outputFile}); // hanadi el function bt3t >>
+            Onegreaterthan obj1 =new Onegreaterthan();
+            String[] outputResult = obj1.execute(args);
+            Collections.addAll(result, outputResult);
+
+        }else if ( ">>".equals(args[1])) {
+            // Default output file
+            String outputFile1 = args[2];
+           String[] inputFiles = Arrays.copyOfRange(args, 0, args.length - 2);
+           Twogreaterthan obj2 =new Twogreaterthan();
+            String[] outputResult = obj2.execute(args);
+            Collections.addAll(result, outputResult);
 
         }else {
-            concatFiles(args);
+            String[] concatResult = concatFiles(args);
+            Collections.addAll(result, concatResult);
         }
         return (result.toArray(new String[0]));
     }
+
     private  String[] printAllTxtFilesAndContents(File directory) {
         List<String> result = new ArrayList<>();
         File[] files = directory.listFiles();
 
-
         if (files != null && files.length > 0) {
             for (File file : files) {
                 if (file.isDirectory()) {
-                    printAllTxtFilesAndContents(file); // Recursively check in subdirectories
+                String[]    subDirFilesResult=  printAllTxtFilesAndContents(file);
+                    Collections.addAll(result, subDirFilesResult);// Recursively check in subdirectories
                 } else if (file.getName().endsWith(".txt")) {
                     // Print the file content if it's a .txt file
-                    printFileContent(file);
+                    String[]  subDirFilesResult1= printFileContent(file);
+                    Collections.addAll(result, subDirFilesResult1);// Recursively check in subdirectories
                 }
             }
-        } else {
-            result.add("The directory is empty or an I/O error occurred.");
         }
         return (result.toArray(new String[0]));
     }
