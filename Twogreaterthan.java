@@ -1,20 +1,15 @@
 package org.os;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-public class Onegreaterthan {
+public class Twogreaterthan {
     @Override
-
-    public String[]  excute(String[] args) {
+    public String [] excutes(String[] args) {
         List<String> result = new ArrayList<>();
 
-        if (!args[args.length - 2].equals(">")) {
+        if (!args[args.length - 2].equals(">>")) {
             result.add("Usage: java EchoOrCatExample <string(don't write it with quotations)_or_inputfile> > <outputfile>");
         }
 
@@ -37,7 +32,7 @@ public class Onegreaterthan {
 
         File inputFile = new File(inputSource);
 
-        try (FileWriter writer = new FileWriter(outputFile)) {
+        try (FileWriter writer = new FileWriter(outputFile,true)) {
             if (inputFile.exists() && inputFile.isFile()) {// bashoof la hwa afile
 
                 try (FileReader reader = new FileReader(inputFile)) {
@@ -45,7 +40,7 @@ public class Onegreaterthan {
                     while ((character = reader.read()) != -1) {
                         writer.write(character);
                     }
-                    result.add("Content from file '" + inputSource + "' has been written to " + outputFile);
+                   result.add("Content from file '" + inputSource + "' has been written to " + outputFile);
                 }
             } else {
                 // treat it as string
@@ -59,40 +54,42 @@ public class Onegreaterthan {
             result.add("An error occurred: " + e.getMessage());
         }
         return (result.toArray(new String[0]));
+
     }
 
-        private String[] handleMultipleFiles(String[] inputSource, String outputFile){
-            List<String> result = new ArrayList<>();
+    private String[] handleMultipleFiles(String[] inputSource, String outputFile){
+        List<String> result = new ArrayList<>();
 
-            try (FileWriter writer = new FileWriter(outputFile)) {
-                for (String inputSources: inputSource) {
-                    File inputFile = new File(inputSources);
-                    if (inputFile.exists() && inputFile.isFile()) {
-                        writeFileContentToOutput(inputFile, writer);
-                    } else {
-                        result.add("Input '" + inputSource + "' does not exist or is not a file. It will be treated as a string.");
-                        writer.write(inputSources);
-                        writer.write(System.lineSeparator()); // Add new line for separation
-                    }
+        try (FileWriter writer = new FileWriter(outputFile,true)) {
+            for (String inputSources: inputSource) {
+                File inputFile = new File(inputSources);
+                if (inputFile.exists() && inputFile.isFile()) {
+                    writeFileContentToOutput(inputFile, writer);
+                } else {
+                    result.add("Input '" + inputSource + "' does not exist or is not a file. It will be treated as a string.");
+                    writer.write(inputSources);
+                    writer.write(System.lineSeparator()); // Add new line for separation
                 }
-                result.add("Content from the specified files and strings has been written to " + outputFile);
-            } catch (IOException e) {
-                result.add("An error occurred: " + e.getMessage());
             }
-            return (result.toArray(new String[0]));
-
+            result.add("Content from the specified files and strings has been written to " + outputFile);
+        } catch (IOException e) {
+            result.add("An error occurred: " + e.getMessage());
         }
-        private static void writeFileContentToOutput (File inputFile, FileWriter writer) throws IOException {
-            try (FileReader reader = new FileReader(inputFile)) {
-                int character;
-                while ((character = reader.read()) != -1) {
-                    writer.write(character);
-                }
-                writer.write(System.lineSeparator()); // Add a new line after each file's content
+        return (result.toArray(new String[0]));
+
+    }
+    private static void writeFileContentToOutput (File inputFile, FileWriter writer) throws IOException {
+        try (FileReader reader = new FileReader(inputFile)) {
+            int character=' ';
+            writer.write(character);
+            while ((character = reader.read()) != -1) {
+                writer.write(character);
             }
+            writer.write(System.lineSeparator()); // Add a new line after each file's content
         }
 
-}
+    }
+    }
 
 
 
