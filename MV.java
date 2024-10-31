@@ -5,26 +5,30 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import java.util.ArrayList;
+import java.util.List;
 public class MV {
 
-    public static void main(String[] args) {
+    public String[] execute (String[] args) {
+        List<String> result = new ArrayList<>();
         if (args.length != 2) {
-            System.out.println("Usage: java MV <sourcefile> <destinationfile>");
+            result.add("Usage: java MV <sourcefile> <destinationfile>");
         }
 
         String SRCfile = args[0];
         String DESTfile = args[1];
 
         String whichoperation = getOperationType(SRCfile, DESTfile);
-        System.out.println("Operation:"+ whichoperation);
+        result.add("Operation:"+ whichoperation);
 
         boolean state = moveOrRename(SRCfile, DESTfile);
         if (state) {
-            System.out.println("Successfully " + whichoperation + " from " + SRCfile + " to " + DESTfile);
+            result.add("Successfully " + whichoperation + " from " + SRCfile + " to " + DESTfile);
         }
         else {
-            System.out.println("Failed to " + whichoperation + " from " + SRCfile + " to " + DESTfile);
+            result.add("Failed to " + whichoperation + " from " + SRCfile + " to " + DESTfile);
         }
+        return (result.toArray(new String[0]));
     }
 
     // Method to determine if it's a rename or a move

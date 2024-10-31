@@ -1,14 +1,22 @@
 package org.example;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 class mkdirTest {
+    @BeforeEach
+    public void setUp() {
+        String [] args = {"CTest", "D", "A", "M"};
+        var RMDIRTester = new RMDIR();
+        RMDIRTester.execute(args);
+    }
     @Test
     public void TestCreatingOneDirectory() {
-        String Dir = "Amrr";
+        String Dir = "CTest";
         String[] args = {Dir};
-        mkdir.main(args); // Move to directory
+        mkdir mkdirTester = new mkdir();
+        mkdirTester.execute(args); // Move to directory
 
         //the dir should appear
         File createdDir = new File(Dir);
@@ -18,8 +26,9 @@ class mkdirTest {
 
     @Test
     public void TestCreatingMultipleDirectories() {
-        String[] args = {"M", "F", "N"};
-        mkdir.main(args); // Move to directory
+        String[] args = {"D", "A", "M"};
+        mkdir mkdirTester = new mkdir();
+        mkdirTester.execute(args);
 
         //the dir should appear
         for (int i=0; i<args.length; i++) {

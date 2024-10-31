@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MVTest {
     @Test
     public void testMoveFile() {
-
+        //fe assignemnt bara m4 java mn gowa
         String srcfile = "Menna.txt";
         String destfile = "try/Menna.txt";
         MV.moveOrRename(srcfile, destfile); // Move to directory
@@ -23,8 +23,8 @@ public class MVTest {
 
     @Test
     public void testRenameFile() {
-        String srcfile = "Noraa.txt";
-        String destfile = "Farah.txt";
+        String srcfile = "Farah.txt";
+        String destfile = "Noraa.txt";
 
         MV.moveOrRename(srcfile, destfile); // Rename in the same directory
 

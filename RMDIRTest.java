@@ -23,7 +23,8 @@ class RMDIRTest {
     public void TestDeletionOneDirectory() {
         String Dir = "Team";
         String[] args = {Dir};
-        RMDIR.main(args); // Move to directory
+        var RMDIRTester = new RMDIR();
+        RMDIRTester.execute(args);
 
         //the dir should appear
         File createdDir = new File(Dir);
@@ -34,7 +35,8 @@ class RMDIRTest {
     public void TestCreatingMultipleDirectories() {
         String Dir = "Testt";
         String[] args = {"-r", Dir};
-        RMDIR.main(args); // Move to directory
+        var RMDIRTester = new RMDIR();
+        RMDIRTester.execute(args);
 
         File createdDir = new File(args[1]);
         assertFalse(createdDir.exists(), "Directory shouldn't exist after creation.");//eno etmasa7

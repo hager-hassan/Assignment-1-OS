@@ -1,13 +1,16 @@
 package org.example;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RMDIR {
-    public static void main(String[] args) {
+    public String[] execute(String[] args) {
+        List<String> result = new ArrayList<>();
         boolean recursivedeletion = false;
         String dirName;
 
         if (args.length == 0) {
-            System.out.println("Usage: java rmdir <directory>");
+            result.add("Usage: java rmdir <directory>");
         }
 
         if (args.length > 0 && args[0].equals("-r")) {
@@ -26,19 +29,20 @@ public class RMDIR {
         } else {
             success = dir.delete(); // Only deletes if the directory is empty
             if (!success && dir.exists()) {
-                System.out.println("Directory is not empty: " + dirName);
+                result.add("Directory is not empty: " + dirName);
             }
         }
 
         if (success && recursivedeletion) {
-            System.out.println("Successfully deleted directories recursively: " + dirName);
+            result.add("Successfully deleted directories recursively: " + dirName);
         } else if (success) {
-            System.out.println("Successfully deleted directory: " + dirName);
+            result.add("Successfully deleted directory: " + dirName);
         } else if (!dir.exists()) {
-            System.out.println("Directory does not exist: " + dirName);
+            result.add("Directory does not exist: " + dirName);
         } else {
-            System.err.println("Failed to delete directory: " + dirName);
+            result.add("Failed to delete directory: " + dirName);
         }
+        return (result.toArray(new String[0]));
     }
 
     // Method for recursive deletion
