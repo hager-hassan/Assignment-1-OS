@@ -1,4 +1,4 @@
-package org.os;
+package org.example;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-public class LsrCommand implements Command {
+public class LsrCommand implements ICommand {
     @Override
     public String[] execute(String[] args) {
         List<String> result = new ArrayList<>();

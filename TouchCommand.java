@@ -1,19 +1,20 @@
+package org.example;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TouchCommand implements ICommand {
     @Override
-public String[] execute(String[] args)
+    public String[] execute(String[] args)
     {
         List<String> result = new ArrayList<>();
 
         if(args.length == 0){
-            result.add("\u001B[31mThis command is not supported.\u001B[0m");
+            result.add("\u001B[31mThis command takes arguments.\u001B[0m");
         }
 
         for(String fileName : args){
-            File myFile = new File(fileName);
+            File myFile = new File(System.getProperty("user.dir"), fileName);
 
             try {
                 if(myFile.createNewFile()){

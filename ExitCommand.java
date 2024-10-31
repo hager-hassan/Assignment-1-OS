@@ -1,3 +1,4 @@
+package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class ExitCommand implements ICommand {
             System.exit(0); // to close the program
         }
         else{
-            result.add("\u001B[31mThis command is not supported. Use 'exit' to close the terminal window.\u001B[0m");
+            result.add("\u001B[31mThis command does not accept any arguments.\u001B[0m");
         }
         return (result.toArray(new String[0]));
     }

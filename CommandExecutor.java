@@ -1,15 +1,24 @@
+package org.example;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
 public class CommandExecutor {
-    private static Map<String, ICommand> commands = new HashMap<>();
+    protected static Map<String, ICommand> commands = new HashMap<>();
 
     static {
         commands.put("pwd" , new PwdCommand());
         commands.put("help" , new HelpCommand());
         commands.put("exit" , new ExitCommand());
         commands.put("touch" , new TouchCommand());
+        commands.put("cd" , new CdCommand());
+        commands.put("ls" , new LsCommand());
+        commands.put("ls-a" , new LsaCommand());
+        commands.put("ls-r" , new LsrCommand());
+        commands.put("mv" , new MvCommand());
+        commands.put("rmdir" , new RmdirCommand());
+        commands.put("mkdir" , new MkdirCommand());
+        commands.put("|", new PipeCommand(new CommandExecutor()));
     }
 
     public static void executeCommand(String command){
@@ -43,7 +52,11 @@ public class CommandExecutor {
 
     private static void specialCommand(String command){
         if (command.contains("|")) {
-           // handle | case
+            String[] result = commands.get("|").execute(new String[]{command});
+            for (String line : result) {
+                System.out.println(line);
+            }
+            return;
         }
         else if (command.contains(">")) {
             // handle > case

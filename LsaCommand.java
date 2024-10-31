@@ -1,4 +1,4 @@
-package org.os;
+package org.example;
 
 import java.io.File;
 import java.util.ArrayList;

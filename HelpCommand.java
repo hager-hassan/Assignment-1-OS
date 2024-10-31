@@ -1,3 +1,4 @@
+package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class HelpCommand implements ICommand {
             result.add("|     - Pipes the output of one command to another command.\u001B[0m");
         }
         else {
-            result.add("\u001B[31mThis command is not supported. Use 'help' for a list of commands.\u001B[0m");
+            result.add("\u001B[31mThis command does not accept any arguments.\u001B[0m");
         }
         return (result.toArray(new String[0]));
     }
