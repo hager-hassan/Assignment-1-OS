@@ -5,6 +5,8 @@ import org.os.LsCommand;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,8 +20,16 @@ class LsCommandTest {
         tempDir.mkdir();
         System.setProperty("user.dir", tempDir.getAbsolutePath());
 
+        // Create visible and hidden files
         new File(tempDir, "visibleFile.txt").createNewFile();
-        new File(tempDir, ".hiddenFile.txt").createNewFile();
+
+        File hiddenFile = new File(tempDir, ".hiddenFile.txt");
+        hiddenFile.createNewFile();
+
+        // Setting the hidden attribute for Windows
+        Path hiddenFilePath = hiddenFile.toPath();
+        Files.setAttribute(hiddenFilePath, "dos:hidden", true);
+
         new File(tempDir, "subDir").mkdir();
     }
 
