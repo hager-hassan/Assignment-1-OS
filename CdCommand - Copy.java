@@ -23,7 +23,7 @@ public class CdCommand implements Command {
             System.setProperty("user.dir", newDir.getAbsolutePath());
             result.add("Changed directory to: " + newDir.getAbsolutePath());
         } else {
-            result.add("Directory not found: " + path);
+            result.add("\u001B[31mDirectory not found: " + path + "\u001B[0m");
         }
 
         return result.toArray(new String[0]);
